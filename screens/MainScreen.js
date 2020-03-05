@@ -12,6 +12,7 @@ import Card from '../components/Card';
 import Colors from '../constants/colors';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
+import InfoRoutes from '../components/InfoRoutes';
 
 const MainScreen = props => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -71,6 +72,8 @@ const MainScreen = props => {
                     <View style={styles.button}><Button title="Como llego?" onPress={resetInputHandler} color={Colors.accent} /></View>
                     <View style={styles.button}><Button title="Donde estoy" onPress={confirmInputHandler} color={Colors.primary} /></View>
                 </View>
+
+                <InfoRoutes></InfoRoutes>
             </View>
         </TouchableWithoutFeedback>
     );
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         paddingHorizontal: 25,
-        textAlign: 'center',
         alignItems: 'center'
     },
     button: {
@@ -106,7 +108,6 @@ const styles = StyleSheet.create({
     },
     input: {
         width: 50,
-        textAlign: 'center'
     },
     summaryContainer: {
         marginTop: 20,
