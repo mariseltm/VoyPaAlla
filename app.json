@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "App1",
+    "name": "VoyPaAlla",
+    "displayName":"VoyPaAlla",
     "slug": "bread_butter",
     "privacy": "public",
     "sdkVersion": "33.0.0",
