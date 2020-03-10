@@ -22,11 +22,45 @@ export default function InfoRoutes() {
         setValue(searchTerm);
         let filtered = [];
         sampleRoutes.forEach(x => {
-            if (x.includes(searchTerm))
+            if (x.toLowerCase().includes(searchTerm.toLowerCase()))
                 filtered.push(x);
         });
         setResultRoutes(filtered);
     }
+
+    const uiSearchResult = (
+        <View>
+            <FlatList
+                data={resultRoutes}
+                renderItem={({ item }) => <RouteCard routeName={item} lastTimeSeen='Visto hace 10m'></RouteCard>}
+                keyExtractor={item => item}
+            />
+        </View>
+    );
+
+    const uiResume = (
+        <View>
+            <InfoRouteSeparator image='[star]' text='Favoritos'></InfoRouteSeparator>
+
+            <View style={styles.routeCardContainer}>
+                <RouteCard routeName='P3' lastTimeSeen='Visto hace 2h'></RouteCard>
+
+                <RouteCard routeName='P14' lastTimeSeen='Visto hace 1h'></RouteCard>
+
+                <RouteCard routeName='P1' lastTimeSeen='Visto hace 30m'></RouteCard>
+            </View>
+
+            <InfoRouteSeparator image='[clock]' text='Recientes'></InfoRouteSeparator>
+
+            <View style={styles.routeCardContainer}>
+                <RouteCard routeName='222' lastTimeSeen='Visto hace 2h'></RouteCard>
+
+                <RouteCard routeName='450' lastTimeSeen='Visto hace 1h'></RouteCard>
+
+                <RouteCard routeName='A40' lastTimeSeen='Visto hace 10m'></RouteCard>
+            </View>
+        </View>
+    );
 
     return (
         <View>
@@ -36,36 +70,7 @@ export default function InfoRoutes() {
                 <Text style={styles.searchIcon}>()</Text>
             </View>
 
-            {value ? (
-                <View>
-                    <FlatList
-                        data={resultRoutes}
-                        renderItem={({ item }) => <RouteCard routeName={item} lastTimeSeen='Visto hace 10m'></RouteCard>}
-                        keyExtractor={item => item}
-                    />
-                </View>) : (
-                    <View>
-                        <InfoRouteSeparator image='[star]' text='Favoritos'></InfoRouteSeparator>
-
-                        <View style={styles.routeCardContainer}>
-                            <RouteCard routeName='P3' lastTimeSeen='Visto hace 2h'></RouteCard>
-
-                            <RouteCard routeName='P14' lastTimeSeen='Visto hace 1h'></RouteCard>
-
-                            <RouteCard routeName='P1' lastTimeSeen='Visto hace 30m'></RouteCard>
-                        </View>
-
-                        <InfoRouteSeparator image='[clock]' text='Recientes'></InfoRouteSeparator>
-
-                        <View style={styles.routeCardContainer}>
-                            <RouteCard routeName='222' lastTimeSeen='Visto hace 2h'></RouteCard>
-
-                            <RouteCard routeName='450' lastTimeSeen='Visto hace 1h'></RouteCard>
-
-                            <RouteCard routeName='A40' lastTimeSeen='Visto hace 10m'></RouteCard>
-                        </View>
-                    </View>
-                )}
+            {value ? uiSearchResult : uiResume}
         </View>
     );
 };
