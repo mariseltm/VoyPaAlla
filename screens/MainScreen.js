@@ -5,78 +5,49 @@ import {
     Text,
     Button,
     TouchableWithoutFeedback,
-    Keyboard,
-    Alert
+    Keyboard
 } from 'react-native';
-import Card from '../components/Card';
 import Colors from '../constants/colors';
-import Input from '../components/Input';
-import NumberContainer from '../components/NumberContainer';
 import InfoRoutes from '../components/InfoRoutes';
 
-const MainScreen = props => {
-    const [enteredValue, setEnteredValue] = useState('');
-    const [confirmed, setConfirmed] = useState(false);
-    const [selectedNumber, setSelectedNumber] = useState();
+const MainScreen = () => {
+    const [currentScreen, setCurrentScreen] = useState('Main');
 
-    const numberInputHandler = inputText => {
-        setEnteredValue(inputText.replace(/[^0-9]/g, ''));
-    };
-
-    const resetInputHandler = () => {
-        setEnteredValue('');
-        setConfirmed(false);
-    };
-
-    const confirmInputHandler = () => {
-        const chosenNumber = parseInt(enteredValue);
-        if (isNaN(chosenNumber) || chosenNumber <= 0
-            || chosenNumber > 99) {
-            Alert.alert(
-                'Invalid number!',
-                'Number has to be a number between 1 and 99.',
-                [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }]
-            );
-            return;
-        }
-        setConfirmed(true);
-        setSelectedNumber(chosenNumber);
-        setEnteredValue('');
-        Keyboard.dismiss();
-    };
-
-    let confirmedOutput;
-
-    if (confirmed) {
-        confirmedOutput = (
-            <Card style={styles.summaryContainer}>
-                <Text>You selected</Text>
-                <NumberContainer>{selectedNumber}</NumberContainer>
-                <Button title="START GAME"
-                    onPress={() => props.onStartGame(selectedNumber)} />
-            </Card>
-        );
-    }
-
-    return (
+    const mainScreen =
         <TouchableWithoutFeedback
             onPress={() => {
                 Keyboard.dismiss();
-            }}
-        >
+            }}>
             <View style={styles.screen}>
                 <Text style={styles.title}>Bienvenido a la App </Text>
                 <Text style={styles.title}> "Voy pa' allá"! </Text>
                 <p>-imagen de fondo-</p>
                 <View style={styles.buttonContainer}>
-                    <View style={styles.button}><Button title="Como llego?" onPress={resetInputHandler} color={Colors.accent} /></View>
-                    <View style={styles.button}><Button title="Donde estoy" onPress={confirmInputHandler} color={Colors.primary} /></View>
+                    <View style={styles.button}><Button title="Como llego?"
+                        onPress={() => setCurrentScreen('Screen1')} color={Colors.accent} /></View>
+                    <View style={styles.button}><Button title="Donde estoy"
+                        onPress={() => setCurrentScreen('Screen2')} color={Colors.primary} /></View>
                 </View>
-
-                <InfoRoutes></InfoRoutes>
             </View>
         </TouchableWithoutFeedback>
-    );
+
+    const routesScreen = <InfoRoutes></InfoRoutes>
+    const secondScreen = <View style={styles.screen}>
+        <Text style={styles.title}>Screen2 </Text>
+    </View>
+
+    const getScreen = () => {
+        switch (currentScreen) {
+            case 'Main':
+                return mainScreen;
+            case 'Screen1':
+                return routesScreen;
+            case 'Screen2':
+                return secondScreen;
+        }
+    }
+
+    return getScreen();
 };
 
 const styles = StyleSheet.create({
