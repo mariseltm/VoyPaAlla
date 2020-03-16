@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function RouteCard(props) {
     const { routeName, lastTimeSeen } = props;
     return (
-        <View style={styles.cardContainer}>
-            <Text style={styles.cardRoute}>{routeName}</Text>
-            <Text style={styles.cardSeenInfo}>{lastTimeSeen}</Text>
-        </View>
+        <TouchableOpacity
+            onPress={() => {
+            }}>
+            <View style={styles.cardContainer}>
+                <Text style={styles.cardRoute}>{routeName}</Text>
+                <Text style={styles.cardSeenInfo}>{lastTimeSeen}</Text>
+            </View>
+        </TouchableOpacity>
     )
 }
 
