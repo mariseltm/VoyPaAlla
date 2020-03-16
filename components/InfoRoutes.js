@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
 import RouteCard from './RouteCard';
+import RouteInfo from './RouteInfo';
+import { routeData } from '../data/routes_data';
 
 function InfoRouteSeparator(props) {
     const { image, text } = props;
@@ -12,18 +14,21 @@ function InfoRouteSeparator(props) {
     )
 }
 
-const sampleRoutes = ['P1', 'P2', 'P3', 'P4', 'A40', '450', '222', '33'];
-
 export default function InfoRoutes() {
     const [value, setValue] = useState('');
     const [resultRoutes, setResultRoutes] = useState([]);
+    const [favoriteRoutes, setFavoriteRoutes] = useState([1, 2, 3, 4]);
+    const [recentRoutes, setRecentRoutes] = useState([5, 6, 7]);
+
+    const getRoutesFromIndexes = (indexes) =>
+        routeData.filter((_, idx) => indexes.indexOf(idx) >= 0);
 
     const filterRoutes = (searchTerm) => {
         setValue(searchTerm);
         let filtered = [];
-        sampleRoutes.forEach(x => {
-            if (x.toLowerCase().includes(searchTerm.toLowerCase()))
-                filtered.push(x);
+        routeData.forEach(x => {
+            if (x.routeName.toLowerCase().includes(searchTerm.toLowerCase()))
+                filtered.push(x.routeName);
         });
         setResultRoutes(filtered);
     }
@@ -32,7 +37,9 @@ export default function InfoRoutes() {
         <View>
             <FlatList
                 data={resultRoutes}
-                renderItem={({ item }) => <RouteCard routeName={item} lastTimeSeen='Visto hace 10m'></RouteCard>}
+                renderItem={({ item }) =>
+                    <RouteCard routeName={item} lastTimeSeen='Visto hace 10m'></RouteCard>
+                }
                 keyExtractor={item => item}
             />
         </View>
@@ -43,28 +50,24 @@ export default function InfoRoutes() {
             <InfoRouteSeparator image='[star]' text='Favoritos'></InfoRouteSeparator>
 
             <View style={styles.routeCardContainer}>
-                <RouteCard routeName='P3' lastTimeSeen='Visto hace 2h'></RouteCard>
-
-                <RouteCard routeName='P14' lastTimeSeen='Visto hace 1h'></RouteCard>
-
-                <RouteCard routeName='P1' lastTimeSeen='Visto hace 30m'></RouteCard>
+                {getRoutesFromIndexes(favoriteRoutes).map(x =>
+                    <RouteCard routeName={x.routeName} lastTimeSeen='Visto hace 10m'></RouteCard>
+                )}
             </View>
 
             <InfoRouteSeparator image='[clock]' text='Recientes'></InfoRouteSeparator>
 
             <View style={styles.routeCardContainer}>
-                <RouteCard routeName='222' lastTimeSeen='Visto hace 2h'></RouteCard>
-
-                <RouteCard routeName='450' lastTimeSeen='Visto hace 1h'></RouteCard>
-
-                <RouteCard routeName='A40' lastTimeSeen='Visto hace 10m'></RouteCard>
+                {getRoutesFromIndexes(recentRoutes).map(x =>
+                    <RouteCard routeName={x.routeName} lastTimeSeen='Visto hace 10m'></RouteCard>
+                )}
             </View>
         </View>
     );
 
     return (
-        <View>
-            <Text>Información de transportación</Text>
+        <View style={styles.mainContainer}>
+            <Text style={styles.mainHeader}>Información de transportación</Text>
             <View style={styles.searchBox}>
                 <TextInput style={styles.searchInput} placeholder='Buscar nombre de ruta' autoFocus={true} onChangeText={(text) => filterRoutes(text)} value={value}></TextInput>
                 <Text style={styles.searchIcon}>()</Text>
@@ -73,9 +76,11 @@ export default function InfoRoutes() {
             {value ? uiSearchResult : uiResume}
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
+    mainContainer: { maxWidth: 600, marginHorizontal: 10, marginVertical: 10 },
+    mainHeader: { fontSize: 24, textAlign: 'center' },
     routeCardContainer: { flexDirection: "row", flexWrap: "wrap" },
     searchIcon: { textAlign: "right", width: 20 },
     searchInput: { width: '100%' },
