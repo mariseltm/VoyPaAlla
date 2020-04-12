@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, Button } from 'react-native';
 import { routeData } from '../data/routes_data';
 
-
 export default function RouteInfo(props) {
     const getSeenText = (seenInfo) => {
         if (seenInfo > 24 || seenInfo === 0) {
