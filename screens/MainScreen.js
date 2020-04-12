@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Colors from '../constants/colors';
-import InfoRoutes from '../components/InfoRoutes';
-import RouteInfo from '../components/RouteInfo';
 
-const MainScreen = () => {
-    const [currentScreen, setCurrentScreen] = useState('Main');
+const MainScreen = (props) => {
 
-    const mainScreen =
+    const goTo = (screen) => props.navigation.push(screen)
+
+    return (
         <TouchableWithoutFeedback
             onPress={() => {
                 Keyboard.dismiss();
@@ -15,34 +14,20 @@ const MainScreen = () => {
             <View style={styles.screen}>
                 <Text style={styles.title}>Bienvenido a la App </Text>
                 <Text style={styles.title}> "Voy pa' allá"! </Text>
-                <p>-imagen de fondo-</p>
+                <Text>-imagen de fondo-</Text>
                 <View style={styles.buttonContainer}>
-                    <View style={styles.button}><Button title="Cómo llego?"
-                        onPress={() => setCurrentScreen('Screen1')} color={Colors.accent} /></View>
-                    <View style={styles.button}><Button title="Dónde estoy?"
-                        onPress={() => setCurrentScreen('Screen2')} color={Colors.primary} /></View>
+                    <View style={styles.button}>
+                        <Button title="Cómo llego?"
+                            onPress={() => goTo('InfoRoutes')}
+                            color={Colors.accent} />
+                    </View>
+                    <View style={styles.button}>
+                        <Button title="Dónde estoy?"
+                            onPress={() => { }} color={Colors.primary} />
+                    </View>
                 </View>
-                <RouteInfo routeIdx={1}></RouteInfo>
             </View>
-        </TouchableWithoutFeedback>
-
-    const routesScreen = <InfoRoutes></InfoRoutes>
-    const secondScreen = <View style={styles.screen}>
-        <Text style={styles.title}>Screen2 </Text>
-    </View>
-
-    const getScreen = () => {
-        switch (currentScreen) {
-            case 'Main':
-                return mainScreen;
-            case 'Screen1':
-                return routesScreen;
-            case 'Screen2':
-                return secondScreen;
-        }
-    }
-
-    return getScreen();
+        </TouchableWithoutFeedback>);
 };
 
 const styles = StyleSheet.create({

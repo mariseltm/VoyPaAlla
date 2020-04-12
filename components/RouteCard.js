@@ -6,6 +6,7 @@ export default function RouteCard(props) {
     return (
         <TouchableOpacity
             onPress={() => {
+                props.navigation.push('RouteInfo', { routeIdx: 1, routeName: routeName })
             }}>
             <View style={styles.cardContainer}>
                 <Text style={styles.cardRoute}>{routeName}</Text>

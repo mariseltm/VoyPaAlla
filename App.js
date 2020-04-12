@@ -1,16 +1,51 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import MainScreen from './screens/MainScreen';
+import InfoRoutes from './components/InfoRoutes';
+import RouteInfo from './components/RouteInfo';
+import RouteCard from './components/RouteCard';
 
-export default function App() {
-  let content = <MainScreen/>;
+const MainNavigator = createAppContainer(createStackNavigator(
+  {
+    Main: {
+      screen: MainScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    InfoRoutes: {
+      screen: InfoRoutes,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    RouteInfo: {
+      screen: RouteInfo,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    RouteCard: {
+      screen: RouteCard,
+      navigationOptions: {
+        headerShown: false
+      }
+    }
+  },
+  {
+    initialRouteName: 'Main',
+  },
+));
 
+function App() {
   return (
-    <View style={styles.screen}>
-      {content}
-    </View>
+    <MainNavigator />
   );
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   screen: {
