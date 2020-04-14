@@ -1,5 +1,7 @@
 import React, { useState, useContext, useReducer, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, Button } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import RouteCard from './RouteCard';
 import { routeData } from '../data/routes_data';
 import { store } from '../store.js';
@@ -7,9 +9,9 @@ import { store } from '../store.js';
 function InfoRouteSeparator(props) {
     const { image, text } = props;
     return (
-        <View style={{ flexDirection: "row" }}>
-            <Text>{image}</Text>
-            <Text>{text}</Text>
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+            <Icon name={image} size={20} color="black" />
+            <Text style={{ marginLeft: 5 }}>{text}</Text>
         </View>
     )
 }
@@ -63,21 +65,27 @@ export default function InfoRoutes(props) {
 
     const uiResume = (
         <View>
-            <InfoRouteSeparator image='[star]' text='Favoritos'></InfoRouteSeparator>
+            {favoriteRoutes.length > 0 ?
+                <>
+                    <InfoRouteSeparator image='star' text='Favoritos'></InfoRouteSeparator>
 
-            <View style={styles.routeCardContainer}>
-                {getRoutesFromIndexes(favoriteRoutes).map(x =>
-                    <RouteCard navigation={props.navigation} routeName={x.routeName} lastTimeSeen='Visto hace 10m'></RouteCard>
-                )}
-            </View>
+                    <View style={styles.routeCardContainer}>
+                        {getRoutesFromIndexes(favoriteRoutes).map(x =>
+                            <RouteCard navigation={props.navigation} routeName={x.routeName} lastTimeSeen='Visto hace 10m'></RouteCard>
+                        )}
+                    </View>
+                </> : <></>}
 
-            <InfoRouteSeparator image='[clock]' text='Recientes'></InfoRouteSeparator>
+            {recentRoutes.length > 0 ?
+                <>
+                    <InfoRouteSeparator image='history' text='Recientes'></InfoRouteSeparator>
 
-            <View style={styles.routeCardContainer}>
-                {getRoutesFromIndexes(recentRoutes).map(x =>
-                    <RouteCard navigation={props.navigation} routeName={x.routeName} lastTimeSeen='Visto hace 10m'></RouteCard>
-                )}
-            </View>
+                    <View style={styles.routeCardContainer}>
+                        {getRoutesFromIndexes(recentRoutes).map(x =>
+                            <RouteCard navigation={props.navigation} routeName={x.routeName} lastTimeSeen='Visto hace 10m'></RouteCard>
+                        )}
+                    </View>
+                </> : <></>}
         </View>
     );
 
