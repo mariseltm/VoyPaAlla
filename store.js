@@ -3,7 +3,7 @@ import { routeData } from './data/routes_data';
 
 const initialState = {
     favoriteRoutes: [1, 2, 3, 4],
-    recentRoutes: [5, 6, 7],
+    recentRoutes: [],
     recentRoutesLimit: 4,
 };
 const store = createContext(initialState);
