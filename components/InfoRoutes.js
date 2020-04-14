@@ -1,5 +1,5 @@
 import React, { useState, useContext, useReducer, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, Button, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import RouteCard from './RouteCard';
@@ -94,10 +94,15 @@ export default function InfoRoutes(props) {
             <Button title='Back'
                 onPress={() => props.navigation.goBack()}
             ></Button>
+            
             <Text style={styles.mainHeader}>Información de transportación</Text>
             <View style={styles.searchBox}>
-                <TextInput style={styles.searchInput} placeholder='Buscar nombre de ruta' autoFocus={true} onChangeText={(text) => filterRoutes(text)} value={filterText}></TextInput>
-                <Text style={styles.searchIcon}>()</Text>
+                <TextInput style={styles.searchInput} placeholder='Buscar nombre de ruta'
+                    autoFocus={true} onChangeText={filterRoutes} value={filterText}>
+                </TextInput>
+                <TouchableWithoutFeedback onPress={() => { filterText ? filterRoutes('') : null }}>
+                    <Icon name={filterText ? 'times' : 'search'} size={20} color="black" />
+                </TouchableWithoutFeedback>
             </View>
 
             {filterText ? uiSearchResult : uiResume}
