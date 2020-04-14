@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useReducer, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, Button } from 'react-native';
 import RouteCard from './RouteCard';
 import { routeData } from '../data/routes_data';
+import { store } from '../store.js';
 
 function InfoRouteSeparator(props) {
     const { image, text } = props;
@@ -14,11 +15,12 @@ function InfoRouteSeparator(props) {
 }
 
 export default function InfoRoutes(props) {
+    const { state } = useContext(store);
 
     const [filterText, setFilterText] = useState('');
     const [resultRoutes, setResultRoutes] = useState([]);
-    const [favoriteRoutes, setFavoriteRoutes] = useState([1, 2, 3, 4]);
-    const [recentRoutes, setRecentRoutes] = useState([5, 6, 7]);
+    const [favoriteRoutes, setFavoriteRoutes] = useState(state.favoriteRoutes);
+    const [recentRoutes, setRecentRoutes] = useState(state.recentRoutes);
 
     const getRoutesFromIndexes = (indexes) =>
         routeData.filter((_, idx) => indexes.indexOf(idx) >= 0);
@@ -32,6 +34,19 @@ export default function InfoRoutes(props) {
         });
         setResultRoutes(filtered);
     }
+
+    useEffect(() => {
+        const didFocusSubscription = props.navigation.addListener(
+            'didFocus',
+            payload => forceUpdate()
+        );
+
+        return function cleanup() {
+            didFocusSubscription.remove();
+        }
+    })
+
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
     const uiSearchResult = (
         <View>

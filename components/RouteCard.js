@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { store } from '../store.js';
 
 export default function RouteCard(props) {
     const { routeName, lastTimeSeen } = props;
+    const { dispatch } = useContext(store);
     return (
         <TouchableOpacity
             onPress={() => {
-                props.navigation.push('RouteInfo', { routeIdx: 1, routeName: routeName })
+                dispatch({ type: 'Add recent route', routeName: routeName });
+                props.navigation.push('RouteInfo', { routeName: routeName });
             }}>
             <View style={styles.cardContainer}>
                 <Text style={styles.cardRoute}>{routeName}</Text>

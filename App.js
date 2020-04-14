@@ -7,6 +7,8 @@ import InfoRoutes from './components/InfoRoutes';
 import RouteInfo from './components/RouteInfo';
 import RouteCard from './components/RouteCard';
 
+import { StateProvider } from './store.js';
+
 const MainNavigator = createAppContainer(createStackNavigator(
   {
     Main: {
@@ -41,7 +43,9 @@ const MainNavigator = createAppContainer(createStackNavigator(
 
 function App() {
   return (
-    <MainNavigator />
+    <StateProvider>
+      <MainNavigator />
+    </StateProvider>
   );
 }
 
