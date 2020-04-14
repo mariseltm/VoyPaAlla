@@ -18,12 +18,12 @@ const MainScreen = (props) => {
                 <View style={styles.buttonContainer}>
                     <View style={styles.button}>
                         <Button title="Cómo llego?"
-                            onPress={() => goTo('InfoRoutes')}
+                            onPress={() => {goTo('HowToGo')}}
                             color={Colors.accent} />
                     </View>
                     <View style={styles.button}>
-                        <Button title="Dónde estoy?"
-                            onPress={() => { }} color={Colors.primary} />
+                        <Button title="Por dónde va la guagua?"
+                            onPress={() => {goTo('InfoRoutes')}} color={Colors.primary} />
                     </View>
                 </View>
             </View>
