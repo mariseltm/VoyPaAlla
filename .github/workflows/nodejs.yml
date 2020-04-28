@@ -37,7 +37,7 @@ jobs:
         run: | 
           npm install
           npm install expo-cli
-          npm run eject
+          npm run eject --non-interactive
           ls
       - name: Build Android Release
         run: |
