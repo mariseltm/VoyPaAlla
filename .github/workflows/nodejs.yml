@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  install-and-test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,7 +27,7 @@ jobs:
     - run: npm test
       env:
         CI: true
-        
+
   build-android:
     needs: install-and-test
     runs-on: ubuntu-latest
