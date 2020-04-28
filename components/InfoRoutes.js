@@ -21,8 +21,8 @@ export default function InfoRoutes(props) {
 
     const [filterText, setFilterText] = useState('');
     const [resultRoutes, setResultRoutes] = useState([]);
-    const [favoriteRoutes, setFavoriteRoutes] = useState(state.favoriteRoutes);
-    const [recentRoutes, setRecentRoutes] = useState(state.recentRoutes);
+    const [favoriteRoutes] = useState(state.favoriteRoutes);
+    const [recentRoutes] = useState(state.recentRoutes);
 
     const getRoutesFromIndexes = (indexes) =>
         routeData.filter((_, idx) => indexes.indexOf(idx) >= 0);
@@ -48,7 +48,7 @@ export default function InfoRoutes(props) {
         }
     })
 
-    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     const uiSearchResult = (
         <View>
@@ -94,7 +94,7 @@ export default function InfoRoutes(props) {
             <Button title='Back'
                 onPress={() => props.navigation.goBack()}
             ></Button>
-            
+
             <Text style={styles.mainHeader}>Información de transportación</Text>
             <View style={styles.searchBox}>
                 <TextInput style={styles.searchInput} placeholder='Buscar nombre de ruta'

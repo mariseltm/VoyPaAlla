@@ -33,7 +33,7 @@ const StateProvider = ({ children }) => {
                 return newState;
             default:
                 throw new Error();
-        };
+        }
     }, initialState);
 
     return <Provider value={{ state, dispatch }}>{children}</Provider>;
